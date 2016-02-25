@@ -47,14 +47,14 @@ shinyServer(function(input, output) {
                 plotname <- rbind(pickaname, matchnames)
                 ggplot(plotname, aes(x = year, y = prop, color = name)) + 
                         geom_line(size = 1.1) + 
-                        annotate("text", x = input$firstyear, y = goalprop*1.15 + 8e-7/goalprop, 
-                                 label = input$firstyear) +
                         annotate("point", x = input$firstyear, y = goalprop,
                                  color = "blue", size = 4.5, alpha = .7) +
-                        annotate("text", x = input$goalyear, y = goalprop*1.15 + 8e-7/goalprop, 
-                                 label = input$goalyear) +
+                        annotate("text", x = input$firstyear, y = 1.2*goalprop + 5e-7/goalprop, 
+                                 label = input$firstyear, color = "black") +
                         annotate("point", x = input$goalyear, y = goalprop,
                                  color = "blue", size = 4.5, alpha = .7) +
+                        annotate("text", x = input$goalyear, y = 1.2*goalprop + 5e-7/goalprop,
+                                 label = input$goalyear, color = "black") +
                         theme(legend.title=element_blank()) + 
                         ylab("Proportion of total applicants for year") + xlab("Year")
   })
