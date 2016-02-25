@@ -10,7 +10,9 @@ shinyServer(function(input, output) {
         output$myPlot <- renderPlot({
                 if (input$sex == "female") babysex <- "F"
                 else if (input$sex == "male") babysex <- "M"
-                pickaname <- babynames %>% filter(sex == babysex, name == input$chosenname)
+                ourname <- paste0(toupper(substring(tolower(input$chosenname), 1, 1)), 
+                                  substring(tolower(input$chosenname), 2))
+                pickaname <- babynames %>% filter(sex == babysex, name == ourname)
                 goalprop <- as.numeric(pickaname[pickaname$year == input$firstyear, 'prop'])
                 subsetfitname <- pickaname %>% 
                         filter(year %in% seq(input$firstyear-5,input$firstyear+5))
@@ -41,18 +43,16 @@ shinyServer(function(input, output) {
                 plotname <- rbind(pickaname, matchnames)
                 ggplot(plotname, aes(x = year, y = prop, color = name)) + 
                         geom_line(size = 1.1) + 
-                        annotate("text", x = input$firstyear, y = goalprop*1.4, label = input$firstyear) +
+                        annotate("text", x = input$firstyear, y = goalprop*1.1 + 0.0000003/goalprop, 
+                                 label = input$firstyear) +
                         annotate("point", x = input$firstyear, y = goalprop,
                                  color = "blue", size = 4.5, alpha = .8) +
-                        annotate("text", x = input$goalyear, y = goalprop*1.4, label = input$goalyear) +
+                        annotate("text", x = input$goalyear, y = goalprop*1.1 + 0.0000003/goalprop, 
+                                 label = input$goalyear) +
                         annotate("point", x = input$goalyear, y = goalprop,
                                  color = "blue", size = 4.5, alpha = .8) +
                         theme(legend.title=element_blank()) + 
                         ylab("Proportion of total applicants for year") + xlab("Year")
   })
-  
-  output$errorText <- renderText({
-          
-  })        
-  
+
 })
