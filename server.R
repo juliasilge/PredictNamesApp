@@ -22,6 +22,10 @@ shinyServer(function(input, output) {
                                                     year == input$goalyear, 
                                                     prop < goalprop*1.1 & prop > goalprop*0.9) %>%
                         mutate(slope = 0.00)
+                if (dim(findmatches)[1] > 60) {
+                        findmatches <- findmatches[order(abs(goalprop - findmatches$prop)),]
+                        findmatches <- findmatches[1:60,]
+                }
                 for (i in seq_along(findmatches$name)) {
                         matchfitname <- babynames %>% filter(sex == babysex, 
                                                              name == as.character(findmatches[i,'name']))
@@ -43,14 +47,14 @@ shinyServer(function(input, output) {
                 plotname <- rbind(pickaname, matchnames)
                 ggplot(plotname, aes(x = year, y = prop, color = name)) + 
                         geom_line(size = 1.1) + 
-                        annotate("text", x = input$firstyear, y = goalprop*1.1 + 0.0000003/goalprop, 
+                        annotate("text", x = input$firstyear, y = goalprop*1.15 + 8e-7/goalprop, 
                                  label = input$firstyear) +
                         annotate("point", x = input$firstyear, y = goalprop,
-                                 color = "blue", size = 4.5, alpha = .8) +
-                        annotate("text", x = input$goalyear, y = goalprop*1.1 + 0.0000003/goalprop, 
+                                 color = "blue", size = 4.5, alpha = .7) +
+                        annotate("text", x = input$goalyear, y = goalprop*1.15 + 8e-7/goalprop, 
                                  label = input$goalyear) +
                         annotate("point", x = input$goalyear, y = goalprop,
-                                 color = "blue", size = 4.5, alpha = .8) +
+                                 color = "blue", size = 4.5, alpha = .7) +
                         theme(legend.title=element_blank()) + 
                         ylab("Proportion of total applicants for year") + xlab("Year")
   })
