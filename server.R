@@ -70,7 +70,7 @@ shinyServer(function(input, output) {
                                  color = "blue", size = 4.5, alpha = .7) +
                         annotate("text", x = input$goalyear, y = 1.2*goalprop + 5e-7/goalprop,
                                  label = input$goalyear, color = "black") +
-                        theme(legend.title=element_blank()) + 
+                        theme_grey(base_size = 16) + theme(legend.title=element_blank()) +
                         ylab("Proportion of total applicants for year") + xlab("Year")
   })
 
