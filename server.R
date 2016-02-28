@@ -31,10 +31,9 @@ shinyServer(function(input, output) {
                                                     prop < goalprop*1.1 & prop > goalprop*0.9) %>%
                         mutate(slope = 0.00)
                 
-                # if there are a lot matches, sort the matches and only keep the first 60
+                # if there are a lot matches, only keep 60 random matches
                 if (dim(findmatches)[1] > 60) {
-                        findmatches <- findmatches[order(abs(goalprop - findmatches$prop)),]
-                        findmatches <- findmatches[1:60,]
+                        findmatches <- findmatches %>% sample_n(60)
                 }
                 
                 # for each matching name, calculate the slope at the goal year
