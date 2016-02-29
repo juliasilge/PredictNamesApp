@@ -25,7 +25,7 @@ shinyUI(fluidPage(
                 criteria. Be patient with the app for rare names. Read more 
                 about this app at ",
                 a("my blog.",
-                  href = "http://juliasilge.com/blog/")
+                  href = "http://juliasilge.com/blog/My-Baby-Boomer-Name/")
                 ),
     
     mainPanel(
